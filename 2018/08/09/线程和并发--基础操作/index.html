@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | 腾飞博客</title>
+  <title>线程和并发--基础操作 | 腾飞博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="腾飞博客">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="概述并发和并行是即相似又有区别：  并行：指两个或多个事件在同一时刻发生； 并发：指两个或多个事件在同一时间段内发生。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线程和并发--基础操作">
+<meta property="og:url" content="http://yoursite.com/2018/08/09/线程和并发--基础操作/index.html">
 <meta property="og:site_name" content="腾飞博客">
+<meta property="og:description" content="概述并发和并行是即相似又有区别：  并行：指两个或多个事件在同一时刻发生； 并发：指两个或多个事件在同一时间段内发生。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-08-09T08:29:51.006Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="腾飞博客">
+<meta name="twitter:title" content="线程和并发--基础操作">
+<meta name="twitter:description" content="概述并发和并行是即相似又有区别：  并行：指两个或多个事件在同一时刻发生； 并发：指两个或多个事件在同一时间段内发生。">
   
     <link rel="alternative" href="/atom.xml" title="腾飞博客" type="application/atom+xml">
   
@@ -150,97 +154,197 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-线程和并发--基础操作" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      线程和并发--基础操作
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/08/09/线程和并发--基础操作/" class="archive-article-date">
+
+        
+        <a href="/2018/08/09/线程和并发--基础操作/" class="archive-article-date">
   	<time datetime="2018-08-09T08:29:18.367Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-09</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/08/09/线程和并发--基础操作/">线程和并发--基础操作</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p><strong>并发和并行</strong>是即相似又有区别：</p>
+<ul>
+<li>并行：指两个或多个事件在同一时刻发生；</li>
+<li>并发：指两个或多个事件在同一时间段内发生。<a id="more"></a>
+<strong>进程</strong>是指一个内存中运行中的应用程序。每个进程都有自己独立的一块内存空间，一个应用程序可以同时启动多个进程。比如在Windows系统中，一个运行的abc.exe就是一个进程。<br>那么我们此时就可以处理同时玩游戏和听音乐的问题了，我们可以设计成两个程序，一个专门负责玩游戏，一个专门负责听音乐。<br>但是问题来了，要是要设计一个植物大战僵尸游戏，我得开N个进程才能完成多个功能，这样的设计显然是不合理的。<br>更何况大多数操作系统都不需要一个进程访问其他进程的内存空间，也就是说进程之间的通信很不方便。<br>此时我们得引入“线程”这门技术，来解决这个问题。</li>
+</ul>
+<p><strong>线程</strong>是指进程中的一个执行任务(控制单元)，一个进程可以同时并发运行多个线程，如：多线程下载软件。<br>一个进程至少有一个线程，为了提高效率，可以在一个进程中开启多个执行任务,即多线程。<br>多进程：操作系统中同时运行的多个程序。<br>多线程：在同一个进程中同时运行的多个任务。<br>我们查看Windows环境下的任务管理器：<br>  在操作系统中允许多个任务，每一个任务就是一个进程，每一个进程也可以同时执行多个任务，每一个任务就是线程。</p>
+<p><strong>多线程</strong>作为一种多任务、并发的工作方式，当然有其存在优势：</p>
+<ul>
+<li>进程之前不能共享内存，而线程之间共享内存(堆内存)则很简单。</li>
+<li>系统创建进程时需要为该进程重新分配系统资源,创建线程则代价小很多,因此实现多任务并发时,多线程效率更高.</li>
+<li>Java语言本身内置多线程功能的支持,而不是单纯第作为底层系统的调度方式,从而简化了多线程编程.</li>
+</ul>
+<h2 id="用java语言创建进程"><a href="#用java语言创建进程" class="headerlink" title="用java语言创建进程"></a>用java语言创建进程</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import java.io.IOException;</span><br><span class="line">//如何用java语言开启一个进程</span><br><span class="line">public class ProcessDemo &#123;</span><br><span class="line">	public static void main(String[] args) throws IOException&#123;</span><br><span class="line">		//方式一：使用Runtime的exec方法</span><br><span class="line">		Runtime.getRuntime().exec(&quot;notepad&quot;);</span><br><span class="line">		//方式二：使用ProcessBuilder类中的start方法</span><br><span class="line">		ProcessBuilder pb = new ProcessBuilder(&quot;notepad&quot;);</span><br><span class="line">		pb.start();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="创建和启动线程"><a href="#创建和启动线程" class="headerlink" title="创建和启动线程"></a>创建和启动线程</h2><h3 id="方式一：继承Thread类"><a href="#方式一：继承Thread类" class="headerlink" title="方式一：继承Thread类"></a>方式一：继承Thread类</h3><ol>
+<li>自定义类继承于Thread类，那么该自定义类就是线程类；</li>
+</ol>
+<p>2．覆写run方法，将线程运行的代码存放在run中；</p>
+<p>3．创建自定义类的对象，即线程对象；</p>
+<p>4．调用线程对象的start方法，启动线程。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">package thread_create;</span><br><span class="line">//继承方式 创建和启动线程</span><br><span class="line">class MusicThread extends Thread&#123;      //MusicThread是线程子类</span><br><span class="line">	public void run() &#123;               //子类必须重写run()方法</span><br><span class="line">		for(int i = 0 ;i &lt; 50;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			System.out.println(&quot;听音乐&quot;+i);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line">public class ExtendsThreadDemo &#123;</span><br><span class="line">	public static void main(String[] args)&#123;</span><br><span class="line">		for(int i = 0 ;i &lt; 50;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			System.out.println(&quot;玩游戏&quot;+i);</span><br><span class="line">			if( i == 10)&#123;</span><br><span class="line">				MusicThread t = new MusicThread();  //创建线程子类的实例</span><br><span class="line">				t.start(); //底层也调用了run();  启动线程</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">			</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="方式二：实现Runnable接口"><a href="#方式二：实现Runnable接口" class="headerlink" title="方式二：实现Runnable接口"></a>方式二：实现Runnable接口</h3><p>1．自定义类实现Runnable接口；</p>
+<p>2．覆写run方法，线程运行的代码存放在run中；</p>
+<p>3．通过Thread类创建线程对象，并将实现了Runnable接口的实现类对象作为参数传递给Thread类的构造器。</p>
+<p>4．Thread类对象调用start方法，启动线程。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">class MusicRunnable implements java.lang.Runnable&#123;         //注意MusicRunnable类不是线程类或者线程子类</span><br><span class="line">	public void run() &#123;									   //接口的实现必须覆盖方法。				</span><br><span class="line">		for(int i = 0 ;i &lt; 50;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			System.out.println(&quot;听音乐&quot;+i);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">public class ImplementsRunnableDemo &#123;</span><br><span class="line">	public static void main(String[] args)&#123;</span><br><span class="line">		for(int i = 0 ;i &lt; 50;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			System.out.println(&quot;玩游戏&quot;+i);</span><br><span class="line">			if( i == 10)&#123;</span><br><span class="line">				Runnable t = new MusicRunnable();        //启动线程必须用线程类对象调用start();</span><br><span class="line">				new Thread(t).start();             //类Thread的一个构造器中Thread(Runnable target)分配新的 Thread 对象。</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="对比两种方法（吃苹果比赛）"><a href="#对比两种方法（吃苹果比赛）" class="headerlink" title="对比两种方法（吃苹果比赛）"></a>对比两种方法（吃苹果比赛）</h3><p><strong>1、继承Thread类</strong> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 	案例:存在50个苹果,现在有请三个童鞋(小A,小B,小C)上台表演吃苹果.</span><br><span class="line"> * 		因为A,B,C三个人可以同时吃苹果,此时得使用多线程技术来实现这个案例.</span><br><span class="line"> *</span><br><span class="line"> *       此处程序不合理,ABC每个线程都执行50次,即ABC每个人都吃一次编号50的苹果</span><br><span class="line"> */</span><br><span class="line">class Person extends Thread&#123;</span><br><span class="line">	private  int num= 50;</span><br><span class="line">	Person(String name)&#123;</span><br><span class="line">		super(name);</span><br><span class="line">	&#125;</span><br><span class="line">	public void run() &#123;</span><br><span class="line">		for(int i = 0;i &lt; 50;i++)&#123;</span><br><span class="line">		if(num &gt; 0)	</span><br><span class="line">		System.out.println(super.getName()+&quot;吃了第&quot;+num--+&quot;个苹果&quot;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br><span class="line">//使用继承Thread的方式创建线程</span><br><span class="line">public class ExtendsDemo &#123;</span><br><span class="line">	public static void main(String[] args)&#123;</span><br><span class="line">		Person p1 = new Person(&quot;A&quot;);</span><br><span class="line">		p1.start();</span><br><span class="line">		Person p2 = new Person(&quot;B&quot;);</span><br><span class="line">		p2.start();</span><br><span class="line">		Person p3 = new Person(&quot;C&quot;);</span><br><span class="line">		p3.start();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>2、实现Runnable接口</strong> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class Apple implements Runnable&#123;</span><br><span class="line">	private int num = 50;</span><br><span class="line">	public void run()&#123;</span><br><span class="line">		for(int i = 0; i&lt; 50 ;i++)&#123;</span><br><span class="line">			if(num &gt; 0)&#123;</span><br><span class="line">				System.out.println(Thread.currentThread().getName()+&quot;吃了第&quot;+num--+&quot;个苹果&quot;);</span><br><span class="line">			&#125;//Thread.currentThread()   返回对当前正在执行的线程对象的引用。</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">//使用实现Runnable接口的方式，这种方法可以解决此问题</span><br><span class="line">public class ImplementsDemo &#123;</span><br><span class="line">	public static void main(String[] args)&#123;</span><br><span class="line">		Runnable r = new Apple();</span><br><span class="line">		new Thread(r,&quot;A&quot;).start();</span><br><span class="line">		new Thread(r,&quot;B&quot;).start();</span><br><span class="line">		new Thread(r,&quot;C&quot;).start();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>对比</strong></p>
+<p>继承方式：</p>
+<ul>
+<li>java中类是单继承的，如果继承了Thread，该类就不能再有其他的直接父类</li>
+<li>从操作上分析，继承方式更简单，获取线程的名字也简单（操作上，简单）</li>
+<li>从多线程共享一个资源上分析，<strong>继承方式不能做到</strong></li>
+</ul>
+<p>实现方式</p>
+<ul>
+<li>java中类可以实现接口，此时该类还可以继承其他类，并且可以实现接口（设计上，更优雅）</li>
+<li>从操作上分析，实现方式稍微复杂点，获取线程的名字比较复杂，得使用currentThread()获取当前线程的引用。</li>
+<li>从多线程共享一个资源上分析，<strong>实现方式可以做到</strong>。</li>
+</ul>
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/08/09/线程和并发--基础操作/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/22/test/" class="archive-article-date">
-  	<time datetime="2018-06-22T06:12:40.254Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-22</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/22/hello-world/" class="archive-article-date">
-  	<time datetime="2018-06-22T05:53:52.033Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-22</time>
-</a>
-        </div>
-    	 
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/22/hello-world/">Hello World</a>
-    </h1>
+  
+    <a href="/2018/06/22/test/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
+
+  
 
 
           </div>
@@ -263,8 +367,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
